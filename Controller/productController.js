@@ -1,13 +1,31 @@
 const product= require("../Model/productModel")
+const cloudinary = require("cloudinary").v2;
 const mongoose = require("mongoose")
 const {isValidRequestBody, isValid, isValidNumber,isValidName} = require("../validation/validation")
+
+
+function isFileTypeSupported(type, supportedTypes) {
+    return supportedTypes.includes(type);
+}
+
+async function uploadFileToCloudinary(file, folder, quality) {
+    const options = {folder};
+    console.log("temp file path", file.tempFilePath);
+
+    if(quality) {
+        options.quality = quality;
+    }
+
+    options.resource_type = "auto";
+    return await cloudinary.uploader.upload(file.tempFilePath, options);
+}
 
 
 
 const createProduct = async function(req,res){
     try{
     const data = req.body
-    const{productName,quantity,price,currencyId, category,description,image,status,Visibility,stockAvailable}=data
+    const{productName,quantity,price,currencyId, category,description,status,Visibility,stockAvailable}=data
 
     if(! isValidRequestBody(data)){
         return res.status(400).send({status : false, message : "Please provide some data"})
@@ -21,9 +39,9 @@ const createProduct = async function(req,res){
         }
      }
 
-    //  if(!isValidName(productName)){
-    //     return res.status(400).send({status : false, message : "Please Enter Valid Product Name"})
-    //  }
+     if(!isValidName(productName)){
+        return res.status(400).send({status : false, message : "Please Enter Valid Product Name"})
+     }
 
    
 
@@ -107,14 +125,33 @@ const createProduct = async function(req,res){
                return res.status(400).send({ status: false, message: "stockAvailable should be boolean" });
            }
 
+           // Image
+
+           const file = req.files.imageFile;
+           console.log(file);
+            //Validation
+        const supportedTypes = ["jpg", "jpeg", "png"];
+        const fileType = file.name.split('.')[1].toLowerCase();
+        console.log("File Type:", fileType);
+
+        if(!isFileTypeSupported(fileType, supportedTypes)) {
+            return res.status(400).json({
+                success:false,
+                message:'File format not supported',
+            })
+        }
+        //file format supported hai
+        console.log("Uploading to Codehelp");
+        const response = await uploadFileToCloudinary(file, "imageUpload");
+        console.log(response);
 
 
 
 
 
-    let createProduct = await product.create(data)
+    let createProduct = await product.create(data,{image:response.secure_url,})
         if(createProduct){
-            return res.status(201).send({status : true, message : "Product successfully created", data : createProduct})
+            return res.status(201).send({status : true, message : "Product successfully created", data : createProduct,image:response.secure_url,})
         }
 
 

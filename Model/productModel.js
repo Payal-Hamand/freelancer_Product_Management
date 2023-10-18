@@ -3,22 +3,22 @@ const mongoose = require("mongoose")
 const productSchema = new mongoose.Schema({
     productName:{
         type:String,
-        required: true
+        // required: true
     },
 
     quantity:{
         type: Number,
-        required: true
+        // required: true
     },
 
     price:{
         type:Number,
-        required: true
+        // required: true
     },
 
     currencyId:{
         type:String,
-        required: true
+        // required: true
     },
         // category:{
     //     type:String,
@@ -26,26 +26,26 @@ const productSchema = new mongoose.Schema({
     // },
     description:{
         type:String,
-        required: true
+        // required: true
     },
-    // image:{
-    //     type:String,
-    //     required: true
-    // },
+    image:{
+        type:String,
+        // required: true
+    },
 
     status:{
         type:Boolean,
-        required: true
+        // required: true
     },
 
     Visibility:{
         type:Boolean,
-        required: true
+        // required: true
     },
 
     stockAvailable:{
         type:Boolean,
-        required: true
+        // required: true
     }
 
 

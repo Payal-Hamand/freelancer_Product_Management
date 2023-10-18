@@ -6,10 +6,20 @@ const cloudinary = require("./config/cloudinary");
 const app = express();
 require("dotenv").config();
 const port = process.env.PORT || 3000;
-// connection with db
-connectDB();
-// connection with cloudinary
-cloudinary.cloudinaryApi();
+const fileupload = require("express-fileupload");
+app.use(fileupload({
+  useTempFiles : true,
+  tempFileDir : '/tmp/'
+}));
+
+//db se connect krnah 
+const db = require("./config/database");
+db.connect();
+
+//cloud se connect krna h 
+
+cloudinary.cloudinaryConnect();
+
 app.use(express.json());
 // app.use(fileUpload({ useTempFiles: true, tempFileDir: "/tmp/" }));
 app.use("/api", router);
