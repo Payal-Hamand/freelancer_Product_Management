@@ -15,18 +15,23 @@ const productSchema = new mongoose.Schema({
         type:Number,
         required: true
     },
-    category:{
-        type:DragEvent,
-        required: true
-    },
-    discription:{
+
+    currencyId:{
         type:String,
         required: true
     },
-    image:{
+        // category:{
+    //     type:String,
+    //     required: true
+    // },
+    description:{
         type:String,
         required: true
     },
+    // image:{
+    //     type:String,
+    //     required: true
+    // },
 
     status:{
         type:Boolean,
@@ -47,4 +52,4 @@ const productSchema = new mongoose.Schema({
 
 })
 
-module.exports = mongoose.model(Product,'productSchema')
+module.exports = new mongoose.model('Product',productSchema)

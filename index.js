@@ -12,7 +12,7 @@ connectDB();
 cloudinary.cloudinaryApi();
 app.use(express.json());
 // app.use(fileUpload({ useTempFiles: true, tempFileDir: "/tmp/" }));
-// app.use("/api", router);
+app.use("/api", router);
 app.get("/test", (req, res) => {
   res.send(`<h1>Hello ji </h1>`);
 });

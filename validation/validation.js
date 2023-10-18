@@ -14,6 +14,8 @@ const isValid = (value) => {
 
 
 
+
+
 const isValidName = (value)=>{
     let namePattern = /^[A-Za-z\s]{1,}[\.]{0,1}[A-Za-z\s]{0,}$/g
 
@@ -27,7 +29,7 @@ const isValidName = (value)=>{
 
 
 
-const isValidPrice = (value)=>{
+const isValidNumber = (value)=>{
     let priceRegex=/^\d+(,\d{3})*(\.\d{1,2})?$/g
     if(priceRegex.test(value)){
         return true
@@ -44,7 +46,7 @@ module.exports = {
     isValid,
     isValidName, 
     isValidRequestBody, 
-    isValidPrice,
+    isValidNumber,
     
  
 }
