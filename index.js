@@ -1,6 +1,6 @@
 const express = require("express");
 const connectDB = require("./config/database");
-const router = require("./router/route");
+const router = require("./router/router");
 const fileUpload = require("express-fileupload");
 const cloudinary = require("./config/cloudinary");
 const app = express();
@@ -11,8 +11,8 @@ connectDB();
 // connection with cloudinary
 cloudinary.cloudinaryApi();
 app.use(express.json());
-app.use(fileUpload({ useTempFiles: true, tempFileDir: "/tmp/" }));
-app.use("/api", router);
+// app.use(fileUpload({ useTempFiles: true, tempFileDir: "/tmp/" }));
+// app.use("/api", router);
 app.get("/test", (req, res) => {
   res.send(`<h1>Hello ji </h1>`);
 });
